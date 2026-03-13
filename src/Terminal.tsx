@@ -149,36 +149,40 @@ export const Terminal: React.FC<Props> = ({ onBootStart, onBootComplete }) => {
       isExecutingRef.current = true;
       if (onBootStart) onBootStart();
       term.writeln('\x1b[1;32mStarting system initializer...\x1b[0m');
-      
+
       const bootMessages = [
         'Loading kernel modules... [OK]',
         'Mounting virtual filesystems... [OK]',
         'Starting networking interface... [OK]',
         'Bringing up loopback interface... [OK]',
-        'Initializing sysadmin simulation protocol... [OK]',
-        'Verifying local user credentials... [OK]',
-        'Welcome to the morland.io environment.'
+        'Initializing home lab environment... [OK]',
+        'Loading war stories from /dev/memory... [OK]',
       ];
 
       for (const msg of bootMessages) {
         await new Promise(resolve => setTimeout(resolve, Math.random() * 300 + 100));
         term.writeln(msg);
       }
-      
+
       term.writeln('');
       term.writeln('  \x1b[1;32mchad\x1b[0m@\x1b[1;32mmorland.io\x1b[0m');
-      term.writeln('  ----------------');
-      term.writeln('  \x1b[1;36mOS\x1b[0m: Linux (Web Emulation)');
+      term.writeln('  ────────────────────');
+      term.writeln('  \x1b[1;36mOS\x1b[0m: Debian GNU/Linux (Home Lab)');
       term.writeln('  \x1b[1;36mHost\x1b[0m: morland.io');
-      term.writeln('  \x1b[1;36mKernel\x1b[0m: 6.1.0-17-amd64 (Emulated)');
-      term.writeln('  \x1b[1;36mUptime\x1b[0m: 951 days');
-      term.writeln('  \x1b[1;36mResolution\x1b[0m: 1920x1080');
+      term.writeln('  \x1b[1;36mUptime\x1b[0m: since 1999');
+      term.writeln('  \x1b[1;36mShell\x1b[0m: bash (what else?)');
       term.writeln('  \x1b[1;36mTerminal\x1b[0m: xterm.js');
-      term.writeln('  \x1b[1;36mCPU\x1b[0m: AMD EPYC 7452 32-Core Processor');
-      term.writeln('  \x1b[1;36mMemory\x1b[0m: 256GiB / 256GiB'); // Changed to 256GiB, since 263768408 kB is 256 GiB
+      term.writeln('  \x1b[1;36mCPU\x1b[0m: Curiosity-driven');
+      term.writeln('  \x1b[1;36mMemory\x1b[0m: full of war stories');
       term.writeln('');
       term.writeln('  \x1b[40m   \x1b[41m   \x1b[42m   \x1b[43m   \x1b[44m   \x1b[45m   \x1b[46m   \x1b[47m   \x1b[0m\r\n');
-      term.writeln('Type "help" to see available commands.');
+
+      // Display MOTD
+      const motd = vfsContextRef.current.resolvePath('motd.txt');
+      if (motd && motd.type === 'file') {
+        term.writeln(motd.content.replace(/\n/g, '\r\n'));
+        term.writeln('');
+      }
       prompt();
       if (onBootComplete) onBootComplete();
       isExecutingRef.current = false;
