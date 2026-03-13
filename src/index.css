@@ -1,0 +1,28 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #050505;
+  color: #33ff33;
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  overflow: hidden;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Base Terminal Overrides */
+.xterm-viewport {
+  overflow-y: hidden !important; /* Hide scrollbar for immersive feel */
+}
+
+::selection {
+  background: rgba(51, 255, 51, 0.3);
+}

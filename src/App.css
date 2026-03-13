@@ -1,0 +1,80 @@
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background-color: #050505;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.terminal-wrapper {
+  width: 95%;
+  height: 95%;
+  position: relative;
+  z-index: 2;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #0a0a0a;
+  box-shadow: 0 0 15px rgba(51, 255, 51, 0.1);
+}
+
+.terminal-container {
+  width: 100%;
+  height: 100%;
+}
+
+/* CRT Screen Effect Overlay */
+.crt-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+  pointer-events: none;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+    linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 6px 100%;
+  animation: flicker 0.15s infinite;
+  box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+}
+
+/* Add a slight curve to the edges like an old monitor */
+.app-container::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 10;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* Very subtle flicker to simulate an old tube */
+@keyframes flicker {
+  0% { opacity: 0.95; }
+  5% { opacity: 0.85; }
+  10% { opacity: 0.95; }
+  15% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+.booting .terminal-wrapper {
+  animation: bootSequence 2s ease-in-out;
+}
+
+@keyframes bootSequence {
+  0% { filter: blur(4px) brightness(0.5); opacity: 0.8; }
+  20% { filter: blur(2px) brightness(1.2); opacity: 1; }
+  40% { filter: blur(1px) brightness(0.8); opacity: 0.9; }
+  60% { filter: blur(0px) brightness(1.5); opacity: 1; }
+  80% { filter: blur(0px) brightness(0.9); opacity: 1; }
+  100% { filter: blur(0px) brightness(1); opacity: 1; }
+}
